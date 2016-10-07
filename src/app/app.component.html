@@ -1,3 +1,55 @@
-<h1>
-  {{title}}
-</h1>
+<div class="container">
+    <div class="page-header">
+      <div class="jumbotron">
+        <h1 class="main-title">
+          switr
+        </h1>
+        <p>
+          Simpler than Twitter
+        </p>
+        <p>
+          This product is created for demo purpose to any tech community in Jakarta, or any other cities.
+        </p>
+        <p>
+          <a class="btn btn-primary btn-lg" href="https://github.com/sigit-prayoga/switr-web.git" role="button">
+            Learn me on Github
+          </a>
+        </p>
+      </div>
+    </div>
+    <!-- you can use controller as, so no need to inject $scope all the time -->
+    <div class="">
+      <form>
+        <textarea class="form-control" maxlength="100" [(ngModel)]="model.swit" placeholder="What's on your mind" required="" rows="2" name="swit">
+        </textarea>
+        <br>
+        <label>
+          {{100 - model.swit.length}} chars left
+        </label>
+        <br>
+        With Socket? Open another browser window, and see the magic!
+        <input name="usingSocket" [(ngModel)]="model.usingSocket" type="checkbox" name="usingSocket">
+        <br>
+        <br>
+        <button class="btn btn-primary btn-lg btn-block" (click)="addSwit()" [disabled]="!model.swit" type="button">
+          Say it!
+        </button>
+        <br>
+      </form>
+
+      <!-- next thing to do remove the UL below into another controller, so we can demo the communication between controller using factory -->
+      <div class=".col-md-6" [hidden]="model.isReact">
+        <input class="form-control" [(ngModel)]="model.filterBy" name="filterBy" placeholder="looking for something?" rows="2" type="text">
+        <br>
+        <ul class="list-group" *ngFor="let swit of swits | orderByTime">
+			<li>
+        <each-swit [swit]="swit"></each-swit>
+			</li>
+        </ul>
+      </div>
+
+      <!-- Demo with ReactJS -->
+      <!-- <with-react [hidden]="!isReact" swits="swits"></with-react> -->
+      <label>React: {{model.isReact}}</label>
+    </div>
+  </div>

@@ -1,0 +1,21 @@
+{
+  "name": "switr-web-angular2",
+  "authors": [
+    "sigit prayoga <sigit@agnium.co.id>"
+  ],
+  "description": "angular 2 version for frontend of switr",
+  "main": "",
+  "license": "MIT",
+  "homepage": "http://jlp.community/switr",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.7"
+  }
+}
