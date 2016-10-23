@@ -1,0 +1,37 @@
+<div class="container">
+    <!-- you can use controller as, so no need to inject $scope all the time -->
+    <div class="">
+      <form>
+        <textarea class="form-control" maxlength="100" [(ngModel)]="model.swit" placeholder="What's on your mind" required="" rows="2" name="swit">
+        </textarea>
+        <br>
+        <label>
+          {{100 - model.swit.length}} chars left
+        </label>
+        <br>
+        With Socket? Open another browser window, and see the magic!
+        <input name="usingSocket" [(ngModel)]="model.usingSocket" type="checkbox" name="usingSocket">
+        <br>
+        <br>
+        <button class="btn btn-primary btn-lg btn-block" (click)="addSwit()" [disabled]="!model.swit" type="button">
+          Say it!
+        </button>
+        <br>
+      </form>
+
+      <!-- next thing to do remove the UL below into another controller, so we can demo the communication between controller using factory -->
+      <div class=".col-md-6" [hidden]="model.isReact">
+        <input class="form-control" [(ngModel)]="model.filterBy" name="filterBy" placeholder="looking for something?" rows="2" type="text">
+        <br>
+        <ul class="list-group" *ngFor="let swit of swits | orderByTime">
+			<li>
+        <each-swit [swit]="swit"></each-swit>
+			</li>
+        </ul>
+      </div>
+
+      <!-- Demo with ReactJS -->
+      <!-- <with-react [hidden]="!isReact" swits="swits"></with-react> -->
+      <label>React: {{model.isReact}}</label>
+    </div>
+  </div>
