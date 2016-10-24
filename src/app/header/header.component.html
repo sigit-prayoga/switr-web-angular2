@@ -1,4 +1,21 @@
 <div class="page-header">
+	<div class="row">
+		<div class="col-md-8"></div>
+		<div class="col-md-4" [hidden]="!loggedIn">
+			<div class="row">
+				<div class="col-md-4">
+					<img [src]="user.photoURL" class="img-rounded" width="50" height="50">
+				</div>
+				<div class="col-md-4">
+					<h6>Hello, {{user.displayName}}!</h6>
+				</div>
+				<div class="col-md-4">
+					<button class="btn btn-danger" (click)="logout()">Logout</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
 	<div class="jumbotron">
 		<h1 class="main-title">
 			switr
@@ -14,5 +31,6 @@
             Learn me on Github
           </a>
 		</p>
+
 	</div>
 </div>

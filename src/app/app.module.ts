@@ -10,6 +10,7 @@ import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import { HeaderComponent } from './header/header.component';
 
+import { AngularFireModule } from 'angularfire2';
 import { StateRegistry, Ng2StateDeclaration, UIRouterModule, UIView } from 'ui-router-ng2';
 
 export let loginState: Ng2StateDeclaration = {
@@ -22,6 +23,14 @@ export let homeState: Ng2StateDeclaration = {
   name: 'home',
   component: HomeComponent,
   url: '/home'
+}
+
+export const firebaseConfig = {
+  apiKey: "AIzaSyDB0fe_oj9rQzibHCPkbtISDAP-hfVxvwo",
+  authDomain: "switr-2eb0e.firebaseapp.com",
+  databaseURL: "https://switr-2eb0e.firebaseio.com",
+  storageBucket: "switr-2eb0e.appspot.com",
+  messagingSenderId: "493551355086"
 }
 
 @NgModule({
@@ -38,8 +47,9 @@ export let homeState: Ng2StateDeclaration = {
     FormsModule,
     HttpModule,
     JsonpModule,
-    UIRouterModule.forRoot({states: [loginState]}),
-    UIRouterModule.forChild({states: [homeState]})
+    UIRouterModule.forRoot({ states: [loginState] }),
+    UIRouterModule.forChild({ states: [homeState] }),
+    AngularFireModule.initializeApp(firebaseConfig)
   ],
   bootstrap: [AppComponent]
 })
