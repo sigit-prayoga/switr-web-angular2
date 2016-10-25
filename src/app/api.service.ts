@@ -4,6 +4,7 @@ import { Swit } from './swit';
 
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
+import { environment } from '../environments/environment'
 
 
 @Injectable()
@@ -13,8 +14,8 @@ export class ApiService {
   constructor (private http: Http){ }
 
   swits: Swit[] = [];
-
-  baseUrl: string = 'http://localhost:1818/api';
+  
+  baseUrl: string = environment.baseUrl+':'+environment.port.node+'/api';
 
   sendSwit(switText: string): Observable<any> {
     let options = this.putBasicHeaders();

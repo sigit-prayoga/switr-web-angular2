@@ -6,10 +6,12 @@ import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 
+import { environment } from '../environments/environment'
+
 @Injectable()
 export class UserService {
 
-  baseUrl: string = 'http://localhost:3001';
+  baseUrl: string = environment.baseUrl+':'+environment.port.go;
 
   constructor (private http: Http){ }
 
