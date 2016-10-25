@@ -13,52 +13,63 @@ import { UserService } from '../user.service'
 export class HeaderComponent implements OnInit {
 
   loggedIn: boolean = false;
-  user = new User("","","","","");
+  user = new User("", "", "", "", "");
 
-  constructor(private af: AngularFire, private uiRouter: UIRouter, private userService: UserService ) {
+  constructor(private af: AngularFire, private uiRouter: UIRouter, private userService: UserService) { }
+
+  ngOnInit() {
+    console.log('init header');
     this.af.auth.subscribe(auth => {
-      if (auth == null){
+      this.loggedIn = (auth != null);
+      if (!auth) {
+        console.log('Login first!');
         //navigate to login screen
         this.uiRouter.stateService.go('login');
-        this.loggedIn = false;
-      }else{
-        this.loggedIn = true;
+      } else {
+        console.log('Already logged in, enjoy');
         this.getUserProfile(auth);
       }
     });
-   }
-
-  ngOnInit() {
   }
 
   getUserProfile(auth: FirebaseAuthState) {
-    var uid: string;
-    if(!auth){
+    var loggedInUser: any;
+    if (!auth) {
       console.log('No auth');
       return;
     }
-    if(auth.facebook){
+    if (auth.facebook) {
       //get from fb
-      uid = auth.facebook.uid;
-    }else if (auth.twitter){
+      loggedInUser = auth.facebook;
+    } else if (auth.twitter) {
       //get from twitter
-      uid = auth.twitter.uid;
-    }else if (auth.google){
+      loggedInUser = auth.twitter;
+    } else if (auth.google) {
       //get from google
-      uid = auth.google.uid;
-    }else{
+      loggedInUser = auth.google;
+    } else {
       console.log('login signin method is weird')
       return
     }
-    this.userService.getUser(uid).subscribe(res => {
-      if(res == null){
+    this.userService.getUser(loggedInUser.uid).subscribe(res => {
+      if (res == null) {
+        console.log('Something weird occured. Force logout!');
+        this.uiRouter.stateService.go('login');
+        //logout immediately
+        this.af.auth.logout()
         return;
       }
+      //construct new user from response
       this.user = new User(res.displayName, res.email, res.photoURL, res.providerId, res.uid);
+    }, err => {
+      console.log('Error when fetching user profile to our backend. Instead get user directly from Firebase');
+      //instead, construct user from firebase
+      this.user = new User(loggedInUser.displayName, loggedInUser.email, loggedInUser.photoURL, loggedInUser.providerId, loggedInUser.uid);
     });
   }
 
   logout() {
+    //firebase logout
     this.af.auth.logout();
   }
 }
