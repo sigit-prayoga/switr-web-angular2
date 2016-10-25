@@ -47,7 +47,7 @@ export const firebaseConfig = {
     FormsModule,
     HttpModule,
     JsonpModule,
-    UIRouterModule.forRoot({ states: [loginState] }),
+    UIRouterModule.forRoot({ states: [loginState], useHash: true, otherwise:'/' }),
     UIRouterModule.forChild({ states: [homeState] }),
     AngularFireModule.initializeApp(firebaseConfig)
   ],
