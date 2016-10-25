@@ -1,5 +1,36 @@
 # Switr Frontend with Angular2
 
+**[Switr](http://jlp.community/switr)** is a really simple web application that made for a demo of some recent technologies.
+It's been dedicated to anyone, community or individual, who wants to share the particular tech.
+
+**Frontend Tech Stack:**
+* [AngularJS](https://github.com/sigit-prayoga/switr-web)
+* [Angular 2.0](https://github.com/sigit-prayoga/switr-web-angular2)
+* ReactJS
+* Bootstrap
+* Socket IO Client
+* Ionic in iOS and Android (coming soon)
+
+**Backend Tech Stack:**
+* [NodeJS](https://github.com/sigit-prayoga/switr-backend)
+* GO
+
+**Database**
+* MongoDB
+* PostgreSQL (coming soon)
+
+**This Repo:**
+* Angular 2
+* Firebase
+
+[Angular 2](https://angular.io/) is a development platform for building mobile and desktop web applications.
+[Firebase](https://firebase.google.com/) is a cloud services provider and backend. We use Firebase here to handle user auth, before save user profile to our database.
+
+In case you wonder, we have 2 backend systems here. For anything related to user (login, profile, preferences), the backend is built with **GO** [fork me here](https://github.com/sigit-prayoga/switr-backend-go).
+For the swit service itself, we use **NodeJS** [check 'em out](https://github.com/sigit-prayoga/switr-backend).
+
+**NOTE:** This project is also available in AngularJS 1.5 [here](https://github.com/sigit-prayoga/switr-web)
+
 This project was generated with [angular-cli](https://github.com/angular/angular-cli) version 1.0.0-beta.16.
 
 ## Development server
