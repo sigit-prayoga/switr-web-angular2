@@ -15,14 +15,11 @@ export class HeaderComponent implements OnInit {
   loggedIn: boolean = false;
   user = new User("", "", "", "", "");
 
-  constructor(private af: AngularFire, private uiRouter: UIRouter, private userService: UserService) { }
-
-  ngOnInit() {
+  constructor(private af: AngularFire, private uiRouter: UIRouter, private userService: UserService) { 
     console.log('init header');
     this.af.auth.subscribe(auth => {
       this.loggedIn = (auth != null);
       if (!auth) {
-        console.log('Login first!');
         //navigate to login screen
         this.uiRouter.stateService.go('login');
       } else {
@@ -32,25 +29,17 @@ export class HeaderComponent implements OnInit {
     });
   }
 
+  ngOnInit() {
+    //init the component, called after the constructor
+  }
+
   getUserProfile(auth: FirebaseAuthState) {
-    var loggedInUser: any;
-    if (!auth) {
-      console.log('No auth');
+    var loggedInUser = this.userService.getUserAuth(auth);
+    if(!loggedInUser){
+      console.log('Cannot recived null auth.');
       return;
     }
-    if (auth.facebook) {
-      //get from fb
-      loggedInUser = auth.facebook;
-    } else if (auth.twitter) {
-      //get from twitter
-      loggedInUser = auth.twitter;
-    } else if (auth.google) {
-      //get from google
-      loggedInUser = auth.google;
-    } else {
-      console.log('login signin method is weird')
-      return
-    }
+    console.log("uid...", loggedInUser.uid);
     this.userService.getUser(loggedInUser.uid).subscribe(res => {
       if (res == null) {
         console.log('Something weird occured. Force logout!');

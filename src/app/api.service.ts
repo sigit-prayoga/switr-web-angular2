@@ -9,31 +9,30 @@ import { environment } from '../environments/environment'
 
 @Injectable()
 export class ApiService {
-  
 
-  constructor (private http: Http){ }
+  constructor(private http: Http) { }
 
   swits: Swit[] = [];
-  
-  baseUrl: string = environment.baseUrl+':'+environment.port.node+'/api';
+
+  baseUrl: string = environment.baseUrl + ':' + environment.port.node + '/api';
 
   sendSwit(switText: string): Observable<any> {
     let options = this.putBasicHeaders();
     console.log('switText', switText);
-    return this.http.post(this.baseUrl+'/swit', {swit: switText}, options).map(this.extractResponse);
+    return this.http.post(this.baseUrl + '/swit', { swit: switText }, options).map(this.extractResponse);
   };
 
   getSwits(): Observable<any> {
     let options = this.putBasicHeaders();
-    return this.http.get(this.baseUrl+'/swits', options).map(this.extractResponse);
+    return this.http.get(this.baseUrl + '/swits', options).map(this.extractResponse);
   };
 
   likeSwit(switId, userId): Observable<any> {
     let options = this.putBasicHeaders();
-    return this.http.post(this.baseUrl+'/like/', {switId: switId, userId: userId}, options).map(this.extractResponse);
+    return this.http.post(this.baseUrl + '/like/', { switId: switId, userId: userId }, options).map(this.extractResponse);
   }
 
-  private putBasicHeaders(){
+  private putBasicHeaders() {
     let headers = new Headers({
       'Content-Type': 'application/json'
     });
@@ -42,8 +41,7 @@ export class ApiService {
     });
   };
 
-
-  extractResponse(res: Response){
+  extractResponse(res: Response) {
     let body = res.json();
     console.log('body', body);
     return body || {};

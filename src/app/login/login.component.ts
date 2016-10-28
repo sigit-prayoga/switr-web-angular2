@@ -14,9 +14,7 @@ import { UIRouter } from "ui-router-ng2";
 
 export class LoginComponent implements OnInit {
 
-  constructor(public af: AngularFire, private userService: UserService, private uiRouter: UIRouter) { }
-
-  ngOnInit() {
+  constructor(public af: AngularFire, private userService: UserService, private uiRouter: UIRouter) {
     this.af.auth.subscribe(auth => {
       if (!auth) {
         //stay here at login page
@@ -27,28 +25,21 @@ export class LoginComponent implements OnInit {
       console.log(auth);
       //navigate to home
       this.uiRouter.stateService.go('home');
-      var user: User;
-
-      if (auth.facebook) {
-        user = auth.facebook;
-      } else if (auth.twitter) {
-        user = auth.twitter;
-      } else if (auth.google) {
-        user = auth.google;
-      } else {
-        console.log('Unregistered signin method');
-        return;
-      }
-
+      //we create the User model is based on the FirebaseAuthState
+      var user = this.userService.getUserAuth(auth);
       //logged in already, save to db
       this.userService.addUser(user).subscribe(res => {
-        console.log('Successfully added a new user. Thanks!');
+        console.log(res.message);
       },
         err => {
           console.log('Error when connecting to backend', err);
           //keep going to 'home', it doesn't matter as of now
         });
     });
+  }
+
+  ngOnInit() {
+    //init the component, called after the constructor
   }
 
   loginFacebook() {

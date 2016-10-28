@@ -3,10 +3,10 @@
 		<div class="col-md-8"></div>
 		<div class="col-md-4" [hidden]="!loggedIn">
 			<div class="row">
-				<div class="col-md-4">
+				<div class="col-md-4" [hidden]="!user.photoURL">
 					<img [src]="user.photoURL" class="img-rounded" width="50" height="50">
 				</div>
-				<div class="col-md-4">
+				<div class="col-md-4" [hidden]="!user.displayName">
 					<h6>Hello, {{user.displayName}}!</h6>
 				</div>
 				<div class="col-md-4">
@@ -31,6 +31,5 @@
             Learn me on Github
           </a>
 		</p>
-
 	</div>
 </div>
