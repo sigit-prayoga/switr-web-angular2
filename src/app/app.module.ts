@@ -11,19 +11,7 @@ import { HomeComponent } from './home/home.component';
 import { HeaderComponent } from './header/header.component';
 
 import { AngularFireModule } from 'angularfire2';
-import { StateRegistry, Ng2StateDeclaration, UIRouterModule, UIView } from 'ui-router-ng2';
-
-export let loginState: Ng2StateDeclaration = {
-  name: 'login',
-  component: LoginComponent,
-  url: '/'
-}
-
-export let homeState: Ng2StateDeclaration = {
-  name: 'home',
-  component: HomeComponent,
-  url: '/home'
-}
+import { RouterModule }   from '@angular/router';
 
 export const firebaseConfig = {
   apiKey: "AIzaSyDB0fe_oj9rQzibHCPkbtISDAP-hfVxvwo",
@@ -47,8 +35,22 @@ export const firebaseConfig = {
     FormsModule,
     HttpModule,
     JsonpModule,
-    UIRouterModule.forRoot({ states: [loginState], useHash: true, otherwise:'/' }),
-    UIRouterModule.forChild({ states: [homeState] }),
+    RouterModule.forRoot([
+      {
+        path: 'login',
+        component: LoginComponent
+      },
+      {
+        path: 'home',
+        component: HomeComponent
+      },
+      {
+        path: '**',
+        redirectTo: 'login'
+      }
+    ], {
+      useHash: true
+    }),
     AngularFireModule.initializeApp(firebaseConfig)
   ],
   bootstrap: [AppComponent]

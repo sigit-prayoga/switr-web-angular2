@@ -5,7 +5,8 @@ import { ApiService } from '../api.service';
 import { OrderByTimePipe } from '../order-by-time.pipe';
 import { EachSwitComponent } from '../each-swit/each-swit.component';
 import { AngularFire, FirebaseAuthState } from 'angularfire2';
-import { UIRouter } from 'ui-router-ng2';
+import { Router }   from '@angular/router';
+
 
 @Component({
   selector: 'app-home',
@@ -22,7 +23,7 @@ export class HomeComponent implements OnInit {
     filterBy: '' //search textarea affect the list of swits
   }
 
-  constructor(private apiService: ApiService, private af: AngularFire, private uiRouter: UIRouter) { }
+  constructor(private apiService: ApiService, private af: AngularFire, private router: Router) { }
 
   ngOnInit() {
     console.log('init home...', this.af.auth);
@@ -30,7 +31,7 @@ export class HomeComponent implements OnInit {
       if (!auth) {
         console.log('You are not logged in. Please login using one of the options.');
         //not logged in, navigate to login
-        this.uiRouter.stateService.go('login');
+        this.router.navigateByUrl('/login');
         return;
       } else {
         //get swits when initialization

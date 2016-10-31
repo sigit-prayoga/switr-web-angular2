@@ -3,7 +3,7 @@ import { AngularFire, AuthMethods, AuthProviders } from 'angularfire2';
 import { UserService } from '../user.service';
 import { User } from '../user';
 
-import { UIRouter } from "ui-router-ng2";
+import { Router }   from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -14,7 +14,7 @@ import { UIRouter } from "ui-router-ng2";
 
 export class LoginComponent implements OnInit {
 
-  constructor(public af: AngularFire, private userService: UserService, private uiRouter: UIRouter) {
+  constructor(public af: AngularFire, private userService: UserService, private router: Router) {
     this.af.auth.subscribe(auth => {
       if (!auth) {
         //stay here at login page
@@ -24,7 +24,7 @@ export class LoginComponent implements OnInit {
       
       console.log(auth);
       //navigate to home
-      this.uiRouter.stateService.go('home');
+      this.router.navigateByUrl('/home');
       //we create the User model is based on the FirebaseAuthState
       var user = this.userService.getUserAuth(auth);
       //logged in already, save to db

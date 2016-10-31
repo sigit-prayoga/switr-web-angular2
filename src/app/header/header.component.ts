@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFire, FirebaseAuthState } from 'angularfire2';
-import { UIRouter } from 'ui-router-ng2';
+import { Router }   from '@angular/router';
 import { User } from '../user';
 import { UserService } from '../user.service'
 
@@ -15,13 +15,13 @@ export class HeaderComponent implements OnInit {
   loggedIn: boolean = false;
   user = new User("", "", "", "", "");
 
-  constructor(private af: AngularFire, private uiRouter: UIRouter, private userService: UserService) { 
+  constructor(private af: AngularFire, private router: Router, private userService: UserService) { 
     console.log('init header');
     this.af.auth.subscribe(auth => {
       this.loggedIn = (auth != null);
       if (!auth) {
         //navigate to login screen
-        this.uiRouter.stateService.go('login');
+        this.router.navigateByUrl('/login');
       } else {
         console.log('Already logged in, enjoy');
         this.getUserProfile(auth);
@@ -43,7 +43,7 @@ export class HeaderComponent implements OnInit {
     this.userService.getUser(loggedInUser.uid).subscribe(res => {
       if (res == null) {
         console.log('Something weird occured. Force logout!');
-        this.uiRouter.stateService.go('login');
+        this.router.navigateByUrl('/login');
         //logout immediately
         this.af.auth.logout()
         return;
